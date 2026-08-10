@@ -14,9 +14,13 @@ const store = useTodoStore()
       :model-value="props.todo.done"
       @update:model-value="store.toggleTodo(props.todo.id)"
     />
-    <span class="flex-1 text-sm" :class="{ 'line-through text-muted-foreground': props.todo.done }">
+    <RouterLink
+      :to="`/todos/${props.todo.id}`"
+      class="flex-1 text-sm hover:underline"
+      :class="{ 'line-through text-muted-foreground': props.todo.done }"
+    >
       {{ props.todo.text }}
-    </span>
+    </RouterLink>
     <Button variant="ghost" size="sm" @click="store.removeTodo(props.todo.id)"> Delete </Button>
   </li>
 </template>
