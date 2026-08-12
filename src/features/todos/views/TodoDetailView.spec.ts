@@ -37,7 +37,8 @@ describe('TodoDetailView', () => {
       global: { plugins: [router, pinia] },
     })
 
-    expect(wrapper.text()).toContain('Learn Vue Router')
+    const input = wrapper.find('input').element as HTMLInputElement
+    expect(input.value).toBe('Learn Vue Router')
   })
 
   it('shows a not-found message for a bad id', async () => {

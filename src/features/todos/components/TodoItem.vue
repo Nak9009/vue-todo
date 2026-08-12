@@ -12,6 +12,7 @@ const store = useTodoStore()
   <li class="flex items-center gap-3 py-2 border-b last:border-0">
     <Checkbox
       :model-value="props.todo.done"
+      :aria-label="`Mark '${props.todo.text}' as done`"
       @update:model-value="store.toggleTodo(props.todo.id)"
     />
     <RouterLink

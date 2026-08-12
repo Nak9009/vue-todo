@@ -64,6 +64,21 @@ export const useTodoStore = defineStore('todos', () => {
     }
   }
 
+  async function updateTodoText(id: string, text: string) {
+    const todo = todos.value.find((t) => t.id === id)
+    if (!todo) return
+
+    const previous = todo.text
+    todo.text = text // optimistic
+
+    try {
+      await todosApi.update(id, { text })
+    } catch (err) {
+      todo.text = previous // rollback
+      error.value = err instanceof Error ? err.message : 'Failed to update todo'
+    }
+  }
+
   async function removeTodo(id: string) {
     const index = todos.value.findIndex((t) => t.id === id)
     if (index === -1) return
@@ -99,6 +114,7 @@ export const useTodoStore = defineStore('todos', () => {
     fetchTodos,
     addTodo,
     toggleTodo,
+    updateTodoText,
     removeTodo,
     setFilter,
     clearCompleted,

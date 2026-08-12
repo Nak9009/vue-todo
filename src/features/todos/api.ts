@@ -18,6 +18,13 @@ function delay(ms: number) {
 }
 
 function maybeFail() {
+  const force = sessionStorage.getItem('force-api-failure')
+  if (force === 'true') {
+    throw new Error('Network request failed. Please try again.')
+  }
+  if (force === 'false') {
+    return
+  }
   if (Math.random() < SIMULATED_FAILURE_RATE) {
     throw new Error('Network request failed. Please try again.')
   }

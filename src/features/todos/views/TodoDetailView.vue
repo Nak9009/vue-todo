@@ -22,7 +22,9 @@ watch(todo, (value) => {
 function saveText() {
   if (!todo.value) return
   const trimmed = draftText.value.trim()
-  if (trimmed) todo.value.text = trimmed
+  if (trimmed && trimmed !== todo.value.text) {
+    store.updateTodoText(todo.value.id, trimmed)
+  }
 }
 
 function handleDelete() {
@@ -47,7 +49,12 @@ function handleDelete() {
             </span>
           </div>
 
-          <Input v-model="draftText" @blur="saveText" @keyup.enter="saveText" />
+          <Input
+            v-model="draftText"
+            placeholder="Todo text"
+            @blur="saveText"
+            @keyup.enter="saveText"
+          />
 
           <div class="flex justify-between">
             <Button variant="outline" @click="router.push('/')">Back</Button>
